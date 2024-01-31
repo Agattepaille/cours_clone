@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Pokemon API</title>
+</head>
+ 
+<body>
+    <h1>Pokemon API</h1>
+ 
+    <form>
+        <p>
+            Enter Pokemon ID : <input type="text" id="pokemon"/>
+            <input type="submit" id="submit" value="chercher" />
+        </p>
+    </form>
+ 
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("form").submit(function(e){
+                e.preventDefault();
+
+                // Fonction callback à appeler une fois la requête AJAX terminée
+                function pokemonCaught(response) {
+                    console.log(response);
+                    alert("You caught a Pokemon ! It's "+ response.pokemon.name);
+                }
+
+                // Fonction pour effectuer la requête AJAX avec la fonction callback
+                function catchPokemon(callback) {
+                    $.ajax({
+                        url: "https://pokeapi.co/api/v2/pokemon-form/" + $("#pokemon").val(),
+                        type: 'get',
+                        success: callback,
+                        error: function(response){
+                            console.log('error');
+                        }
+                    });
+                }
+
+                // Appeler la fonction pour effectuer la requête AJAX avec la fonction callback
+                catchPokemon(pokemonCaught);
+            });
+        });
+    </script>
+</body>
+</html>

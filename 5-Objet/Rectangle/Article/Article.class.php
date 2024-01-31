@@ -14,7 +14,7 @@ class Article
         self::$tauxTVA;
     }
 
-    public static function calculerPrixTTC() : float {
+    public function calculerPrixTTC() : float {
         $prixTTC = $this->prixHT + ($this->prixHT*self::$tauxTVA/100);
         return $prixTTC;
     }
