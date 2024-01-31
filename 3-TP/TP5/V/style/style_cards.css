@@ -1,0 +1,120 @@
+.card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  max-width: 100%;
+  width: 150px;
+  max-height: 100%;
+  height: 250px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 1px 3px 0 #222;
+  background: whitesmoke;
+}
+
+.cardtext {
+  font-family: 'Old Standard TT', serif;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  grid-column: 3;
+  grid-row: 4;
+  color: black;
+  font-size:x-large;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+  height: 350px;
+  margin: 0;
+  padding: 30px;
+  list-style: none;
+}
+
+.card-list__item {
+  position: absolute;
+  animation: none;
+  animation-fill-mode: forwards;
+
+  &[data-card="0"] {
+    z-index: 6;
+
+    margin-top: 0;
+  }
+
+  &[data-card="1"] {
+    z-index: 5;
+
+    margin-top: 4px;
+  }
+
+  &[data-card="2"] {
+    z-index: 4;
+
+    margin-top: 8px;
+  }
+
+  .is-animated & {
+
+    &[data-card="0"] {
+      animation: shuffle 1s ease-in-out 0s 1 normal;
+      z-index: 2;
+      transition: z-index 0s ease-in-out 0.5s;
+    }
+
+    &[data-card="1"] {
+      animation: shuffle 1s ease-in-out 1s 1 normal;
+      z-index: 1;
+      transition: z-index 0s ease-in-out 1.5s;
+    }
+
+    &[data-card="2"] {
+      animation: shuffle 1s ease-in-out 2s 1 normal;
+      z-index: 0;
+      transition: z-index 0s ease-in-out 2.5s;
+    }
+  }
+}
+
+img {
+  height: 20px;
+  width: auto;
+  z-index: 0;
+}
+
+.img1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.img2 {
+  grid-column: 5;
+  grid-row: 1;
+}
+
+.img3 {
+  grid-column: 1;
+  grid-row: 7;
+}
+
+.img4 {
+  grid-column: 5;
+  grid-row: 7;
+}
+
+@keyframes shuffle {
+  0% {
+    transform: rotate(0) translateX(0) scale(1);
+  }
+
+  50% {
+    transform: rotate(5deg) translateX(105%) scale(0.96);
+  }
+
+  100% {
+    transform: rotate(0) translateX(0);
+  }
+}

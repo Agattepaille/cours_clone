@@ -1,0 +1,98 @@
+/*Style template for basic elements of resume*/
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;  
+}
+
+body {
+  font-family: 'Poppins', Helvetica, sans-serif;
+  font-size: 1em;
+  overflow: auto;
+  background: linear-gradient(to bottom right, #BD7B72 0, #1F4172 50%);
+}
+
+main {
+  margin-top: 80px;
+  height: 100%;
+}
+
+header {
+  background-color: #FDF0F0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  height: 80px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+
+footer {
+  background-color: #FDF0F0;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+a {
+  color: #132043;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #132043;
+  text-align: center;
+}
+
+h2 {
+  line-height: 1.3rem;
+  font-size: 1.3rem;
+  color: #132043;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 10px;
+  color: #132043;
+}
+
+h4 {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #132043;
+}
+
+p,
+ul {
+  font-size: 1rem;
+  color: #132043;
+  font-weight: 300;
+  padding: 0;
+}
+
+ul {
+  list-style-type: circle;
+}

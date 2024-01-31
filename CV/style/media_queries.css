@@ -1,0 +1,57 @@
+/* Includes media queries for the main breakpoints */
+@media (max-width: 1024px) {
+    .default-nav {
+        display: none;
+    }
+
+    .burger-nav {
+        display: block;
+    }
+
+    .card {
+        width: 600px;
+    }
+
+    header {
+        background-color: rgba(253, 240, 240, 0.9);
+    }
+
+    .gallery a {
+        width: 50%;
+    }
+}
+
+@media (max-width: 767px) {
+    .card {
+        width: 480px;
+    }
+
+    .gallery a {
+        width: 100%;
+    }
+
+    .form-name-email {
+        flex-direction: column;
+    }
+
+    .form-column {
+        width: 100%;
+    }
+}
+    @media (max-width: 750px) {
+        .card {
+            width: 400px;
+        }
+    
+        .gallery a {
+            width: 80%;
+        }
+    
+        .form-name-email {
+            flex-direction: column;
+        }
+    
+        .form-column {
+            width: 100%;
+        }
+    }

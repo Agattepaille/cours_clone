@@ -1,0 +1,326 @@
+/*  Styles the specific elements of resume */
+
+.background {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+/* Color span to add spots of color to the text */
+.color {
+  color: #BD7B72;
+}
+
+/* Style :
+navigation menu */
+nav a {
+  margin-left: 30px;
+}
+
+/* Burger menu hidden on big screens*/
+.burger-nav {
+  display: none;
+  background-color: rgba(253, 240, 240, 0.9);
+  position: relative;
+  margin: 15px;
+}
+
+/* Hide the links inside the navigation menu */
+.burger-nav .navlinks {
+  display: none;
+}
+
+/* Style navigation menu links */
+.burger-nav a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 5px;
+}
+
+/* Style the burger menu icon */
+.burger-nav a.icon {
+  background: #132043;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+}
+
+/* Style the buttons of the navigation menu */
+.button {
+  background-color: #FDF0F0;
+  border: 1px solid rgba(19, 32, 67, 0.15);
+  border-radius: 1em;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #132043;
+  cursor: pointer;
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 6px 16px;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button:hover {
+  background-color: #BD7B72;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+/* Style 
+Container of the sections */
+.card {
+  flex-wrap: wrap;
+  background-color: #FDF0F0;
+  margin: auto;
+  padding: 30px 40px;
+  width: 900px;
+  min-width: 480px;
+  border-radius: 1em;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 2px 2px 19px -5px rgba(35, 73, 128, 0.8);
+  -moz-box-shadow: 2px 2px 19px -5px rgba(35, 73, 128, 0.8);
+  box-shadow: 2px 2px 19px -5px rgba(35, 73, 128, 0.8);
+}
+
+/* Style the first section */
+#start {
+  margin-top: 100px;
+}
+
+.card:first-child img {
+  border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  width: 200px;
+  display: block;
+  margin: auto;
+  -webkit-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.75);
+}
+
+.card:first-child p {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  text-align: center;
+  display: block;
+  margin: auto;
+  max-width: 80%;
+}
+
+.card:first-child h2 {
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Style
+"Experience" and "Formation" sections */
+.location {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.dates {
+  border: 1px solid rgba(189, 123, 114, 0.15);
+  border-width: 1px;
+  border-radius: 10px;
+  padding: 6px 16px;
+  font-size: 1em;
+}
+
+/* Style
+"Experience" and "Hobbies" text lists */
+#jobs ul,
+#hobbies ul {
+  margin-left: 15px;
+}
+
+/* Style 
+skills bar */
+.skillbar {
+  position: relative;
+  display: block;
+  margin-bottom: 15px;
+  width: 80%;
+  background: #eee;
+  height: 25px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -webkit-transition: 0.4s linear;
+  -moz-transition: 0.4s linear;
+  -ms-transition: 0.4s linear;
+  -o-transition: 0.4s linear;
+  transition: 0.4s linear;
+}
+
+.skillbar-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 110px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #FDF0F0;
+  background: #BD7B72;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.skillbar-title span {
+  display: block;
+  padding: 0 20px;
+  height: 25px;
+  line-height: 25px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.skillbar-bar {
+  height: 25px;
+  width: 0px;
+  background: rgba(189, 123, 114, 0.8);
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+.skill-bar-percent {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  font-size: 11px;
+  height: 25px;
+  line-height: 25px;
+  color: #ffffff;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Style
+"Projects" section wich includes style of images */
+#projects a {
+  text-decoration: underline;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery a {
+  width: 33.33%;
+}
+
+.photo-container {
+  padding: 10px;
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.photo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 1em;
+  -webkit-box-shadow: 3px 3px 20px -2px rgba(35, 73, 128, 0.8);
+  -moz-box-shadow: 3px 3px 20px -2px rgba(35, 73, 128, 0.8);
+  box-shadow: 3px 3px 20px -2px rgba(35, 73, 128, 0.8);
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+
+.capture {
+  max-width: 500px;
+}
+
+/* hover on images */
+.photo:hover {
+  opacity: .5;
+}
+
+/* Style
+"Contacts" section, includes a form */
+.form-contacts {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: rgb(35, 73, 128);
+}
+
+.form-name-email {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.form-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+input,
+textarea {
+  padding: 15px;
+  border-radius: 3px;
+  border: solid #BD7B72 1px;
+  background: #FDF0F0;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input[type='submit'] {
+  width: 200px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+form .button {
+  border-radius: 3px;
+  border: 1px solid #BD7B72;
+}
+
+.informations {
+  list-style: none;
+}
+
+.informations li {
+  margin-bottom: 10px;
+}
+
+.informations i {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.social {
+  margin: 20px 0 20px 0;
+  display: inline-block;
+}
+
+.social i {
+  margin: 10px;
+}

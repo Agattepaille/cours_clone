@@ -1,0 +1,42 @@
+.id-column, .td-id, .id-column-snitches {
+    width: 10px;
+}
+
+
+td p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+@media (max-width: 810px) {
+    table {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+    }
+
+    table td:first-child {
+        border-radius: 0 16px 0 0;
+    }
+
+    .id-column, .td-id, .id-column-snitches {
+        width: 98px;
+    }
+
+    .id-column {
+        width: 105px;
+    }
+    td p {
+        margin: 0;
+        width: 100%;
+    }
+
+    thead th, tbody td{
+        width: 98px;
+    }
+
+}
+

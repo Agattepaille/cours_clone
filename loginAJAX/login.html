@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="utf-8" />
+    <title>Un formulaire de connexion en AJAX</title></head>
+ 
+<body>
+    <div id="resultat">
+        <!-- Nous allons afficher un retour en jQuery au visiteur -->
+    </div>
+         
+        <h1>Un formulaire de connexion en AJAX</h1>
+ 
+    <form>
+        <p>
+        Nom d'utilisateur : <input type="text" id="username" />
+        Mot de passe : <input type="password" id="password" />
+        <input type="submit" id="submit" value="Se connecter !" />
+        </p>
+    </form>
+ 
+    <script src="js/jquery-3.3.1.min.js"></script>
+</body>
+</html>
+ 
+<script>
+ 
+$(document).ready(function(){
+ 
+    $("#submit").click(function(e){
+        e.preventDefault();
+ 
+            $.ajax({
+            url:"ctrl/connexion.php",
+            type:'POST',
+			dataType: 'json', //text
+            data: {
+                username : $("#username").val(),  // Nous récupérons la valeur de nos input que l'on fait passer à connexion.php
+                password : $("#password").val()
+                
+            },
+            success:function(response){		
+			 //var json = $.parseJSON(response);
+				console.log(response);
+				alert(response.nom + response.prenom);
+
+
+            },
+			error:function(response){
+                console.log('error');
+				alert("error");
+
+            }
+			
+        });
+    });
+});
+ 
+</script>

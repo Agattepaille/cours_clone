@@ -1,0 +1,135 @@
+.island1 {
+  background-color: #D4AF37;
+  border: solid 5px #D4AF37;
+  grid-column: 3;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  border-radius: 1em;
+  box-shadow: 0px 0px 8px 1px #477148;
+  min-width: 150px;
+}
+
+.island2 {
+  background-color: #D4AF37;
+  border: solid 5px #D4AF37;
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, 150px);
+  border-radius: 1em;
+  box-shadow: 0px 0px 8px 1px #477148;
+  min-width: 250px;
+}
+
+.island3 {
+  background-color: #D4AF37;
+  border: solid 5px #D4AF37;
+  grid-column: 1;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, 150px);
+  border-radius: 1em;
+  box-shadow: 0px 0px 8px 1px #477148;
+  min-width: 250px;
+}
+
+.island4 {
+  background-color: #D4AF37;
+  border: solid 5px #D4AF37;
+  grid-column: 3;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, 150px);
+  border-radius: 1em;
+  box-shadow: 0px 0px 8px 1px #477148;
+  min-width: 250px;
+}
+
+.desk1 {
+  background-color: #477148;
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+  min-width: 100px;
+}
+
+.desk2 {
+  background-color: #477148;
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+  min-width: 100px;
+}
+
+.desk3 {
+  background-color: #477148;
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+  min-width: 100px;
+}
+
+.desk4 {
+  background-color: #477148;
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+  min-width: 100px;
+}
+
+i {
+  margin: auto;
+  color: beige;
+}
+
+.place {
+  font-style: 700;
+  font-size: 2em ;
+}
+
+.name {
+  font-style: 400;
+}
+
+.islandMoussa {
+  background-color: #477148;
+  grid-column: 4;
+  grid-row: 1/3;
+  height: 450px;
+  min-width: 200px;
+  border-radius: 1em;
+  box-shadow: 0px 0px 8px 1px #477148;
+  display: flex;
+  flex-direction: column;
+  border: solid 5px #D4AF37    ;
+  min-width: 250px;
+  max-width: 280px;
+}
+
+.islandMoussa p {
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.islandMoussa i {
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+}  

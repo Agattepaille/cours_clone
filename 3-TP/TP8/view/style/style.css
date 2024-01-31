@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+
+/* Colors List */
+
+:root {
+
+    --brunswick: #145548;
+
+    --night: #0A090C;
+
+    --silver: #BDC2BF;
+
+    --champagne: #F8EAD3;
+
+}
+
+
+
+* {
+
+    text-decoration: none;
+
+}
+
+
+
+body {
+
+    font-family: 'Roboto', sans-serif;
+
+    margin: 0;
+
+    scroll-behavior: smooth;
+
+}
+
+
+
+/* Side Green Panel */
+
+.green-panel, .panel {
+    background-color: var(--brunswick);
+    width: 100%;
+    min-width: 176px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.green-panel {
+    width: 250px !important;
+    min-width: 176px !important;
+}
+
+.panel {
+    font-size: 4em;
+}
+
+.green-panel strong, .panel strong {
+
+    color: white;
+
+}
+
+
+
+.green-panel hr, .panel hr {
+
+    border-bottom: 1px solid #0a090c3d;
+
+    margin-bottom: 32px;
+
+    width: 100%;
+
+}
+
+
+
+.green-panel a, .panel a {
+
+    text-decoration: none;
+
+    color: var(--champagne);
+
+    font-size: 1.1em;
+
+    font-weight: 500;
+
+    padding: 8px;
+
+    width: 80%;
+
+}
+
+
+
+.green-panel h1, .panel h1 {
+
+    margin-left: 0;
+
+    margin-right: 0;
+
+    font-size: 1.7em;
+
+}
+
+
+
+.green-panel a:hover, .green-panel a.clicked, .panel a:hover, .panel a.clicked {
+
+    background: var(--champagne);
+
+    color: var(--brunswick);
+
+    transition: .3s ease-in-out;
+
+    border-radius: 5px;
+
+}
+
+
+
+.green-panel i, .panel i {
+
+    margin-right: 8px;
+
+}
+
+
+
+/* Back to top ancre */
+
+
+
+.ancre {
+
+    display: flex;
+
+    flex-direction: row-reverse;
+
+    margin: 0 20px 20px 0;
+
+}
+
+
+
+.fa-arrow-up {
+
+    color: var(--silver);
+
+    font-size:40px;
+
+}
+
+
+
+.fa-arrow-up:hover {
+
+    color: var(--brunswick);
+
+    transition: .5s ease-in-out;
+
+}
+
+
+/* @media (max-width: 810px) {
+    .panel {
+        background-color: red !important;
+        font-size: 5em;
+    }
+} */
+.green-panel .title-swearjar {
+    padding: 0;
+}
+.green-panel .title-swearjar:hover {
+    background-color: transparent;
+    color: var(--champagne);
+}

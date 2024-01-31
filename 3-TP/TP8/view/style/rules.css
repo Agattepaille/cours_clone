@@ -1,0 +1,460 @@
+.complete-page {
+
+    display: flex;
+
+    flex-direction: row;
+
+}
+
+
+
+.page-content {
+
+    flex: 1;
+
+}
+
+
+
+
+
+
+
+hr {
+
+    margin: 0;
+
+}
+
+
+
+nav {
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: 0 16px;
+
+}
+
+
+
+nav a {
+
+    text-decoration: none;
+
+    color: black;
+
+    font-weight:600;
+
+}
+
+
+
+nav a:hover {
+
+    color: var(--brunswick);
+
+}
+
+
+
+nav a i {
+
+    margin-left: 8px;
+
+}
+
+
+
+hr {
+
+    margin: 0;
+
+}
+
+
+
+.fa-bars {
+
+    display: none;
+
+}
+
+
+
+h3 {
+
+    font-size: 1em;
+
+    margin: 26px 0 0 0;
+
+}
+
+
+
+p {
+
+    margin: 0;
+
+    text-align: justify;
+
+}
+
+
+
+.conclusion {
+
+    margin: 26px 0 0 0;
+
+}
+
+
+
+img {
+
+    width: 40%;
+
+    float:right;
+
+    margin-top: 0;
+
+}
+
+
+
+table {
+
+    margin-top: 32px;
+
+    border-spacing: 0;
+
+    width: 98%;
+
+}
+
+
+
+.table-container {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 128px;
+
+}
+
+
+
+.before-form {
+
+    width: 98%;
+
+    text-align: center;
+
+    margin: auto;
+
+    margin-bottom: 16px;
+
+}
+
+
+
+table th {
+
+    background-color: var(--champagne);
+
+    text-align: left;
+
+    padding: 1em;
+
+    white-space: nowrap;
+
+    /* width: 100%; */
+
+}
+
+
+
+.actions-buttons {
+
+    display: flex;
+
+    flex: row;
+
+}
+
+
+
+table th:first-child, table td:first-child {
+
+    border-radius: 14px 0 0 14px;
+
+}
+
+table th:last-child, table td:last-child {
+
+    border-radius: 0 14px 14px 0;
+
+}
+
+
+
+td {
+
+    padding: 12px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.348);
+
+}
+
+
+
+.select {
+
+    padding: 6px;
+
+    border-radius: 6px;
+
+}
+
+
+
+.icon-action {
+
+    font-size: 0.9em;
+
+    padding: 8px;
+
+    border-radius: 6px;
+
+    margin: 0 3px 0 0;
+
+    background-color: white;
+
+    border: 1px solid rgba(0, 0, 0, 0.348);
+
+}
+
+
+
+.icon-action:hover {
+
+    background: var(--champagne);
+
+    transition: .3s ease-in-out;
+
+}
+
+
+
+
+
+thead th, tbody  td {
+
+    min-width: 50px;
+
+}
+
+
+
+.rules-margin {
+
+    margin: 50px 250px 20px 250px;
+
+}
+
+
+nav ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li{
+    float: left;
+    width: 150px;
+    text-align: right;
+    position: relative;
+}
+
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav .link-topmenu, nav .link-submenu{
+    display: block;
+    text-decoration: none;
+    color: black;
+    border-bottom: 2px solid transparent;
+    padding: 3px 0px;
+}
+
+nav .link-topmenu:hover, nav .link-submenu:hover{
+    color: var(--brunswick);
+    border-bottom: 2px solid var(--brunswick);
+}
+
+.sous{
+    display: none;
+    box-shadow: 0px 1px 2px #CCC;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+nav > ul li:hover .sous{
+    display: block;
+}
+.sous li{
+    float: none;
+    width: 100%;
+    text-align: left;
+}
+.sous a{
+    padding: 10px;
+    border-bottom: none;
+}
+.sous a:hover{
+    border-bottom: none;
+    background-color: RGBa(200,200,200,0.1);
+}
+
+
+
+
+/*media queries*/
+
+
+
+@media (max-width: 1335px) {
+
+    .rules-margin {
+
+        margin: 50px 150px 20px 150px;
+
+    }
+
+}
+
+
+
+@media (max-width: 1200px) {
+
+    .rules-margin {
+
+        margin: 50px 100px 20px 100px;
+
+    }
+
+    th, td, select {
+
+        font-size: 0.8em;
+
+    }
+
+    select {
+
+        padding: 3px;
+
+    }
+
+}
+
+
+
+@media (max-width: 1100px) {
+
+    .green-panel a {
+
+        font-size: 1.3em;
+
+    }
+
+    thead th, tbody  td {
+
+        padding: 8px;
+
+    }
+
+}
+
+
+
+@media (max-width: 980px) {
+
+    .green-panel a {
+        font-size: 1.2em;
+    }
+
+    thead th, tbody  td {
+
+        padding: 5px;
+
+    }
+
+
+
+    .icon-stats {
+
+        font-size: 1.3em;
+
+        margin: 0 16px 0 0;
+
+    }
+
+
+
+    .select {
+
+        width: 50px;
+
+    }
+
+}
+
+
+
+@media (max-width: 850px) {
+
+    .rules-margin {
+
+        margin: 50px 20px 20px 20px;
+
+    }
+
+    th, td {
+
+        font-size: 0.7em;
+
+    }
+
+}
+
+
+
+@media (max-width: 810px) {
+
+    .green-panel {
+
+        display: none !important;
+
+    }
+
+    .fa-bars {
+
+        display: inline;
+
+    }
+
+
+
+}
+
