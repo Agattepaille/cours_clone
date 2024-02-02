@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://www.johnpapa.net/async-comparisons/ -->
+<html lang="en" data-nav-visible="no"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Comparing Callbacks, Promises and Async Await in TypeScript</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="./Comparing Callbacks, Promises and Async Await in TypeScript_files/app.css">
+    <link rel="stylesheet" type="text/css" href="./Comparing Callbacks, Promises and Async Await in TypeScript_files/prism.css">
+    <link href="./Comparing Callbacks, Promises and Async Await in TypeScript_files/css" rel="stylesheet">
+
+    <meta name="description" content="How do callbacks, promises and async/await compare to each other? This article shows the same scenario using each of these three techniques so you can see the differences and choose which appeals most to you.">
+    <link rel="canonical" href="https://www.johnpapa.net/async-comparisons/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="https://www.johnpapa.net/async-comparisons/amp/">
+    
+    <meta property="og:site_name" content="John Papa">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Comparing Callbacks, Promises and Async Await in TypeScript">
+    <meta property="og:description" content="How do callbacks, promises and async/await compare to each other? This article shows the same scenario using each of these three techniques so you can see the differences and choose which appeals most to you.">
+    <meta property="og:url" content="https://www.johnpapa.net/async-comparisons/">
+    <meta property="og:image" content="https://www.johnpapa.net/content/images/size/w1200/2020/02/async-ts-1.png">
+    <meta property="article:published_time" content="2020-02-23T17:06:00.000Z">
+    <meta property="article:modified_time" content="2020-02-23T18:55:26.000Z">
+    <meta property="article:tag" content="webdev">
+    <meta property="article:tag" content="typescript">
+    <meta property="article:tag" content="vscode">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Comparing Callbacks, Promises and Async Await in TypeScript">
+    <meta name="twitter:description" content="How do callbacks, promises and async/await compare to each other? This article shows the same scenario using each of these three techniques so you can see the differences and choose which appeals most to you.">
+    <meta name="twitter:url" content="https://www.johnpapa.net/async-comparisons/">
+    <meta name="twitter:image" content="https://www.johnpapa.net/content/images/size/w1200/2020/02/async-ts-1.png">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="John Papa">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="webdev, typescript, vscode">
+    <meta name="twitter:site" content="@john_papa">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="495">
+    
+    <script type="text/javascript" async="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/js"></script><script async="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/analytics.js.téléchargement"></script><script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "John Papa",
+        "url": "https://www.johnpapa.net/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.johnpapa.net/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "John Papa",
+        "url": "https://www.johnpapa.net/author/johnpapa/",
+        "sameAs": []
+    },
+    "headline": "Comparing Callbacks, Promises and Async Await in TypeScript",
+    "url": "https://www.johnpapa.net/async-comparisons/",
+    "datePublished": "2020-02-23T17:06:00.000Z",
+    "dateModified": "2020-02-23T18:55:26.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://www.johnpapa.net/content/images/size/w1200/2020/02/async-ts-1.png",
+        "width": 1200,
+        "height": 495
+    },
+    "keywords": "webdev, typescript, vscode",
+    "description": "How do callbacks, promises and async/await compare to each other? This article shows the same scenario using each of these three techniques so you can see the differences and choose which appeals most to you.",
+    "mainEntityOfPage": "https://www.johnpapa.net/async-comparisons/"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 5.77">
+    <link rel="alternate" type="application/rss+xml" title="John Papa" href="https://www.johnpapa.net/rss/">
+    <script defer="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/portal.min.js.téléchargement" data-i18n="false" data-ghost="https://www.johnpapa.net/" data-key="6b9cb8259c309397dfd16dac6d" data-api="https://johnpapa.ghost.io/ghost/api/content/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <script defer="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/sodo-search.min.js.téléchargement" data-key="6b9cb8259c309397dfd16dac6d" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/main.css" data-sodo-search="https://johnpapa.ghost.io/" crossorigin="anonymous"></script>
+    
+    <link href="https://www.johnpapa.net/webmentions/receive/" rel="webmention">
+    <script defer="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/cards.min.js.téléchargement"></script>
+    <link rel="stylesheet" type="text/css" href="./Comparing Callbacks, Promises and Async Await in TypeScript_files/cards.min.css">
+    <script defer="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/member-attribution.min.js.téléchargement"></script>
+    <script type="text/javascript">(function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-18897867-1', 'auto'); ga('send', 'pageview');</script><style>:root {--ghost-accent-color: #15171A;}</style>
+
+<script type="text/javascript" async="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/a.min.js.téléchargement"></script><style>.gh-portal-account-header{display:flex;flex-direction:column;align-items:center;margin:0 0 32px}.gh-portal-account-header .gh-portal-avatar{margin:6px 0 8px!important}.gh-portal-account-data{margin-bottom:40px}footer.gh-portal-account-footer{display:flex}.gh-portal-account-footer.paid{margin-top:12px}.gh-portal-account-footermenu{display:flex;align-items:center;list-style:none;padding:0;margin:0}.gh-portal-account-footerright{display:flex;flex-grow:1;align-items:center;justify-content:flex-end}.gh-portal-account-footermenu li{margin-right:16px}.gh-portal-account-footermenu li:last-of-type{margin-right:0}.gh-portal-freeaccount-newsletter{display:flex;align-items:center;justify-content:space-between;margin-top:24px}.gh-portal-freeaccount-newsletter .label{display:flex;flex-direction:column;flex-grow:1}.gh-portal-free-ctatext{margin-top:-12px}.gh-portal-cancelcontinue-container{margin:24px 0 32px}.gh-portal-list-detail .gh-portal-email-notice{display:flex;align-items:center;gap:5px;margin-top:6px;color:var(--red);font-weight:500;font-size:1.25rem;letter-spacing:.2px}.gh-portal-email-notice-icon{width:20px;height:20px}.gh-portal-billing-button-loader{width:32px;height:32px;margin-right:-3px;opacity:.6}.gh-portal-product-icon{width:52px;margin-right:12px;border-radius:2px}.gh-portal-account-discountcontainer{position:relative;display:flex;align-items:center}.gh-portal-account-old-price{text-decoration:line-through;color:var(--grey9)!important}.gh-portal-account-tagicon{width:16px;height:16px;color:var(--brandcolor);margin-right:5px;z-index:999}@media (max-width: 390px){.gh-portal-account-footer{padding:0!important}}@media (max-width: 340px){.gh-portal-account-footer{padding:0!important;flex-wrap:wrap;gap:12px}.gh-portal-account-footer .gh-portal-account-footerright{justify-content:flex-start}}.gh-email-suppressed-page-title{margin-bottom:14px}.gh-email-suppressed-page-icon{display:block;width:38px;height:38px;margin:0 auto 18px}.gh-email-suppressed-page-text{padding:0 14px;text-align:center;color:var(--grey6)}.gh-email-faq-footer-text{color:var(--grey8)}.gh-portal-list-detail.email-newsletter .gh-email-faq-page-button{display:block;margin-top:3px}.accountEmail .gh-email-faq-page-button{margin-left:4px}.emailReceivingFAQ .gh-portal-btn-back,.emailReceivingFAQ .gh-portal-btn-back:hover{left:calc(6vmin - 14px)}.emailReceivingFAQ .gh-portal-closeicon-container{right:calc(6vmin - 20px)}@media (max-width: 480px){.emailReceivingFAQ .gh-portal-btn-back,.emailReceivingFAQ .gh-portal-btn-back:hover{left:16px}.emailReceivingFAQ .gh-portal-closeicon-container{right:24px}}.gh-email-faq-page-button{color:var(--brandcolor);cursor:pointer;background:none;transition:color linear .1s;font-size:1.45rem}</style><style>.App{text-align:center}.App-logo{height:40vmin;pointer-events:none}@media (prefers-reduced-motion: no-preference){.App-logo{animation:App-logo-spin infinite 20s linear}}.App-header{background-color:#282c34;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:calc(10px + 2vmin);color:#fff}.App-link{color:#61dafb}@keyframes App-logo-spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+</style><script type="text/javascript" async="" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/a.min(1).js.téléchargement"></script></head>
+<body class="post-template tag-webdev tag-typescript-ref tag-vscode-ref">
+
+  <header class="site-nav padded headroom headroom--not-bottom headroom--not-top headroom--unpinned">
+  <div class="wrapper">
+    <nav class="site-nav-pages">
+      <span class="site-nav-image" style="background-image: url(/content/images/size/w600/2021/05/papa-new-banner-3.png);"></span>
+        <ul class="nav">
+    <li class="nav-home"><a href="https://www.johnpapa.net/">Home</a></li>
+    <li class="nav-speaking"><a href="https://www.johnpapa.net/speaking/">Speaking</a></li>
+    <li class="nav-training"><a href="https://www.johnpapa.net/training/">Training</a></li>
+    <li class="nav-articles"><a href="https://www.johnpapa.net/articles/">Articles</a></li>
+    <li class="nav-about"><a href="https://www.johnpapa.net/about/">About</a></li>
+    <li class="nav-contact"><a href="https://www.johnpapa.net/contact/">Contact</a></li>
+</ul>
+
+      <button type="button" class="site-nav-close padded">
+        <div class="wrapper">
+          <svg width="24px" height="25px" viewBox="0 0 24 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Mobile-Nav" transform="translate(-335.000000, -13.000000)" fill="#FFFFFF">
+                <g id="Group-4" transform="translate(335.000000, 13.000000)">
+                  <rect id="Rectangle-Copy-3" transform="translate(12.000000, 12.500000) rotate(45.000000) translate(-12.000000, -12.500000) " x="-3" y="11" width="30" height="3"></rect>
+                  <rect id="Rectangle-Copy-4" transform="translate(12.000000, 12.500000) scale(-1, 1) rotate(45.000000) translate(-12.000000, -12.500000) " x="-3" y="11" width="30" height="3"></rect>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </button>
+    </nav>
+    <ul class="site-nav-social">
+      <li>
+        <a class="twitter" href="https://twitter.com/john_papa">
+          <span class="hidden">Twitter</span>
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <title>Twitter icon</title>
+  <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path>
+</svg>        </a>
+      </li>
+      <li>
+        <a class="instagram" href="https://instagram.com/_john.papa">
+          <span class="hidden">Instagram</span>
+          <svg viewBox="6.746 8.301 20.821 20.821" width="20.821" height="20.821">
+  <g id="Instagram" transform="matrix(0.072619, 0, 0, 0.072619, -1.434176, 0.121547)" style="">
+    <path d="M366.28,233.93h-25a88.22,88.22,0,1,1-170.64,0h-25V355.25a11,11,0,0,0,11,11H355.24a11,11,0,0,0,11-11Zm0-77.19a11,11,0,0,0-11-11H322.17a11,11,0,0,0-11,11v33.09a11,11,0,0,0,11,11h33.07a11,11,0,0,0,11-11ZM256,200.86A55.14,55.14,0,1,0,311.14,256,55.13,55.13,0,0,0,256,200.86m110.28,198.5H145.72a33.09,33.09,0,0,1-33.08-33.09V145.72a33.08,33.08,0,0,1,33.08-33.08H366.28a33.07,33.07,0,0,1,33.08,33.08V366.27a33.08,33.08,0,0,1-33.08,33.09">
+    </path>
+  </g>
+</svg>        </a>
+      </li>
+      <li>
+        <a class="devdotto" href="https://dev.to/john_papa">
+          <span class="hidden">Dev.to</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img"><title>dev.to icon</title><path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6l.02 2.44.04 2.45.56-.02c.41 0 .63-.07.83-.26.24-.24.26-.36.26-2.2 0-1.91-.02-1.96-.29-2.18zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.32 2.57.05 2.23-.02 2.73-.47 3.3zm5.09-5.47h-2.47v1.77h1.52v1.28l-.72.04-.75.03v1.77l1.22.03 1.2.04v1.28h-1.6c-1.53 0-1.6-.01-1.87-.3l-.3-.28v-3.16c0-3.02.01-3.18.25-3.48.23-.31.25-.31 1.88-.31h1.64v1.3zm4.68 5.45c-.17.43-.64.79-1 .79-.18 0-.45-.15-.67-.39-.32-.32-.45-.63-.82-2.08l-.9-3.39-.45-1.67h.76c.4 0 .75.02.75.05 0 .06 1.16 4.54 1.26 4.83.04.15.32-.7.73-2.3l.66-2.52.74-.04c.4-.02.73 0 .73.04 0 .14-1.67 6.38-1.8 6.68z"></path></svg>        </a>
+      </li>
+      <li>
+        <a class="linkedin" href="http://www.linkedin.com/in/papajohn">
+          <span class="hidden">LinkedIn</span>
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>        </a>
+      </li>
+      <li>
+        <a class="rss" href="http://feeds.feedburner.com/johnpapa">
+          <span class="hidden">RSS</span>
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>RSS icon</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"></path></svg>        </a>
+      </li>
+    </ul>
+    <button type="button" class="site-menu-open">
+      <svg width="26px" height="23px" viewBox="0 0 26 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-334.000000, -14.000000)" fill="#FFFFFF">
+            <g transform="translate(334.000000, 14.000000)">
+              <rect id="Rectangle" x="0" y="0" width="26" height="3"></rect>
+              <rect id="Rectangle-Copy" x="0" y="10" width="26" height="3"></rect>
+              <rect id="Rectangle-Copy-2" x="0" y="20" width="26" height="3"></rect>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </button>
+  </div>
+</header>
+
+    
+
+<style type="text/css">
+@media (min-width: 1001px) {
+  .site-header {
+    background-image: url(/content/images/size/w2000/2020/02/async-ts-1.png);
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1000px) {
+  .site-header {
+    background-image: url(/content/images/size/w1000/2020/02/async-ts-1.png);
+    background-image: -webkit-image-set(
+      url(/content/images/size/w1000/2020/02/async-ts-1.png) 1x,
+      url(/content/images/size/w2000/2020/02/async-ts-1.png) 2x
+    );
+    background-image: image-set(
+      url(/content/images/size/w1000/2020/02/async-ts-1.png) 1x,
+      url(/content/images/size/w2000/2020/02/async-ts-1.png) 2x
+    );
+  }
+}
+@media (max-width: 600px) {
+  .site-header {
+    background-image: url(/content/images/size/w600/2020/02/async-ts-1.png);
+    background-image: -webkit-image-set(
+      url(/content/images/size/w600/2020/02/async-ts-1.png) 1x,
+      url(/content/images/size/w1000/2020/02/async-ts-1.png) 2x
+    );
+    background-image: image-set(
+      url(/content/images/size/w600/2020/02/async-ts-1.png) 1x,
+      url(/content/images/size/w1000/2020/02/async-ts-1.png) 2x
+    );
+  }
+}
+</style>
+<header class="site-header has-image">
+
+    <div class="padded-wrapper">
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+
+        <div class="site-main-outer padded">
+          
+
+<main id="site-main" class="site-main-inner">
+
+  <article class="post-full post tag-webdev tag-typescript-ref tag-vscode-ref featured ">
+
+    <header class="post-header">
+
+      <h1>Comparing Callbacks, Promises and Async Await in TypeScript</h1>
+
+      <section class="post-meta">
+        <time class="post-meta-date" datetime="2020-02-23">23 February 2020</time>
+          <span class="post-meta-tags">
+            <a href="https://www.johnpapa.net/tag/webdev/">webdev</a> <span>/</span> <a href="https://www.johnpapa.net/tag/typescript-ref/">typescript</a> <span>/</span> <a href="https://www.johnpapa.net/tag/vscode-ref/">vscode</a>
+          </span>
+      </section>
+
+      <div class="post-share">
+  <ul>
+    <li>
+      <a class="twitter" href="http://twitter.com/share?url=https://www.johnpapa.net/async-comparisons/&amp;text=John%Papa%3A%20Comparing%20Callbacks%2C%20Promises%20and%20Async%20Await%20in%20TypeScript" onclick="window.open(this.href, &#39;twitter-share&#39;, &#39;width=550,height=235&#39;);return false;">
+        <span class="hidden">Share on Twitter</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <title>Twitter icon</title>
+  <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path>
+</svg>      </a>
+    </li>
+    <li>
+      <a class="instagram" href="http://instagram.com/share?url=https://www.johnpapa.net/async-comparisons/&amp;text=John%Papa%3A%20Comparing%20Callbacks%2C%20Promises%20and%20Async%20Await%20in%20TypeScript" onclick="window.open(this.href, &#39;instagram-share&#39;, &#39;width=550,height=235&#39;);return false;">
+        <span class="text">Tweet</span>
+        <svg viewBox="6.746 8.301 20.821 20.821" width="20.821" height="20.821">
+  <g id="Instagram" transform="matrix(0.072619, 0, 0, 0.072619, -1.434176, 0.121547)" style="">
+    <path d="M366.28,233.93h-25a88.22,88.22,0,1,1-170.64,0h-25V355.25a11,11,0,0,0,11,11H355.24a11,11,0,0,0,11-11Zm0-77.19a11,11,0,0,0-11-11H322.17a11,11,0,0,0-11,11v33.09a11,11,0,0,0,11,11h33.07a11,11,0,0,0,11-11ZM256,200.86A55.14,55.14,0,1,0,311.14,256,55.13,55.13,0,0,0,256,200.86m110.28,198.5H145.72a33.09,33.09,0,0,1-33.08-33.09V145.72a33.08,33.08,0,0,1,33.08-33.08H366.28a33.07,33.07,0,0,1,33.08,33.08V366.27a33.08,33.08,0,0,1-33.08,33.09">
+    </path>
+  </g>
+</svg>      </a>
+    </li>
+    <li>
+      <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://www.johnpapa.net/async-comparisons/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+        <span class="hidden">Share on Facebook</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title><path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>      </a>
+    </li>
+    <li>
+      <a class="googleplus" href="https://plus.google.com/share?url=https://www.johnpapa.net/async-comparisons/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+        <span class="hidden">Share on Google+</span>
+        <svg width="30" height="20" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
+  <path d="M9.544 8.636v3.274h5.419c-.217 1.406-1.638 4.119-5.414 4.119-3.255 0-5.914-2.7-5.914-6.029 0-3.327 2.652-6.028 5.91-6.028 1.856 0 3.099.792 3.806 1.473l2.591-2.493C14.28 1.396 12.122.46 9.55.46 4.265.456 0 4.73 0 10s4.267 9.544 9.544 9.544c5.512 0 9.165-3.873 9.165-9.326 0-.627-.068-1.107-.15-1.582H9.544zm20.456 0h-2.729V5.907h-2.729v2.73h-2.727v2.726h2.73v2.73h2.736v-2.73H30V8.636z" fill-rule="nonzero"></path>
+</svg>
+      </a>
+    </li>
+    <li>
+      <a class="reddit" href="http://reddit.com/submit?url=https://www.johnpapa.net/async-comparisons/&amp;title=John%Papa%3A%20Comparing%20Callbacks%2C%20Promises%20and%20Async%20Await%20in%20TypeScript" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=550&#39;);return false;">
+        <span class="hidden">Share on Reddit</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title><path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>      </a>
+    </li>
+    <li>
+      <a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.johnpapa.net/async-comparisons/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+        <span class="hidden">Share on LinkedIn</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>      </a>
+    </li>
+  </ul>
+</div>
+    </header>
+
+    <section class="post-full-content">
+      <div class="post-content nice-type">
+        <!--kg-card-begin: markdown--><p>How do callbacks, promises and async/await compare to each other? This article shows the same scenario using each of these three techniques so you can see the differences and choose which appeals most to you.</p>
+<p>The code uses <a href="http://www.typescriptlang.org/?wt.mc_id=johnpapanet-blog-jopapa&amp;ref=johnpapa.net">TypeScript</a>, but can easily be adapted to JavaScript.</p>
+<blockquote>
+<p>Learn more about this code in my course <a href="https://pluralsight.pxf.io/V9eR6?ref=johnpapa.net">Creating Asynchronous TypeScript Code</a> on Pluralsight.</p>
+</blockquote>
+<p>This article shows three different techniques to get an object graph of a hero with that hero's orders and account rep.</p>
+<p>The scenario for these examples are that there is a set of heroes. Each hero has to shop, so they make orders. And each hero has a dedicated account rep for their orders. Heroes are like customers, if that helps 😄</p>
+<h2 id="callbacks"><a title="Andhor link to callbacks" href="https://www.johnpapa.net/async-comparisons/#callbacks" class="post-header-anchor-link"># </a>Callbacks</h2>
+<p>When writing callbacks we end up with a series of nested calls. This is easy to see when we look a the code below as it all tends to drift to the right. This drifting is also known as the "Pyramid of Doom".</p>
+<p>The code below gets a hero by the hero's email. Then it gets the orders for the hero and merges them into the hero object. Then it gets the account repo for the hero and merges that data into the hero object. Finally, it returns the hero with all of the orders and account rep data.</p>
+<div class="code-toolbar"><pre class="line-numbers  language-typescript" data-start="1" style="counter-reset: linenumber 0;"><code class="  language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">getHeroTreeCallback</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>
+  <span class="token parameter">email<span class="token punctuation">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  callback<span class="token punctuation">:</span> Callback<span class="token punctuation">,</span>
+  callbackError<span class="token operator">?</span><span class="token punctuation">:</span> CallbackError<span class="token punctuation">,</span></span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">getHeroCallback</span><span class="token punctuation">(</span>
+    email<span class="token punctuation">,</span>
+    <span class="token parameter">hero</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">getOrdersCallback</span><span class="token punctuation">(</span>
+        hero<span class="token punctuation">.</span>id<span class="token punctuation">,</span>
+        <span class="token parameter">orders</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+          hero<span class="token punctuation">.</span>orders <span class="token operator">=</span> orders<span class="token punctuation">;</span>
+          <span class="token function">getAccountRepCallback</span><span class="token punctuation">(</span>
+            hero<span class="token punctuation">.</span>id<span class="token punctuation">,</span>
+            <span class="token parameter">accountRep</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+              hero<span class="token punctuation">.</span>accountRep <span class="token operator">=</span> accountRep<span class="token punctuation">;</span>
+              <span class="token function">callback</span><span class="token punctuation">(</span>hero<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token function">callbackError</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token function">callbackError</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token function">callbackError</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><span>TypeScript</span></div></div></div>
+<h3 id="individualcallbacks"><a title="Andhor link to individualcallbacks" href="https://www.johnpapa.net/async-comparisons/#individualcallbacks" class="post-header-anchor-link"># </a>Individual Callbacks</h3>
+<p>The <code>getHeroTeeCallback</code> function calls nested functions. You can see these in the following code example.</p>
+<p>There are three functions here. Each gets the Hero, the Hero's orders, and the Hero's account reps, respectively. Notice that each follows a pattern of using axios to get the data over http, and invokes the <code>callback</code> or <code>callbackError</code> function based on whether the code worked or encountered an error.</p>
+<div class="code-toolbar"><pre class="line-numbers  language-typescript" data-start="1" style="counter-reset: linenumber 0;"><code class="  language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">getHeroCallback</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>
+  <span class="token parameter">email<span class="token punctuation">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  callback<span class="token punctuation">:</span> Callback<span class="token punctuation">,</span>
+  callbackError<span class="token operator">?</span><span class="token punctuation">:</span> CallbackError<span class="token punctuation">,</span></span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  axios
+    <span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>apiUrl<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/heroes?email=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>email<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">response<span class="token punctuation">:</span> AxiosResponse</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token function">parseList</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> hero <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token function">callback</span><span class="token punctuation">(</span>hero<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">error<span class="token punctuation">:</span> AxiosError</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Developer Error: Async Data Error: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>error<span class="token punctuation">.</span>message<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">callbackError</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Oh no! We're unable to fetch the Hero</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">getOrdersCallback</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>
+  <span class="token parameter">heroId<span class="token punctuation">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span>
+  callback<span class="token punctuation">:</span> Callback<span class="token punctuation">,</span>
+  callbackError<span class="token operator">?</span><span class="token punctuation">:</span> CallbackError<span class="token punctuation">,</span></span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> url <span class="token operator">=</span> heroId <span class="token operator">?</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>apiUrl<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/orders/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>heroId<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>apiUrl<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/orders</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+  axios
+    <span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">response<span class="token punctuation">:</span> AxiosResponse</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> orders <span class="token operator">=</span> <span class="token function">parseList</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">callback</span><span class="token punctuation">(</span>orders<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">error<span class="token punctuation">:</span> AxiosError</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Developer Error: Async Data Error: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>error<span class="token punctuation">.</span>message<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">callbackError</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Oh no! We're unable to fetch the Orders</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">getAccountRepCallback</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>
+  <span class="token parameter">heroId<span class="token punctuation">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span>
+  callback<span class="token punctuation">:</span> Callback<span class="token punctuation">,</span>
+  callbackError<span class="token operator">?</span><span class="token punctuation">:</span> CallbackError<span class="token punctuation">,</span></span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>apiUrl<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/accountreps/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>heroId<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+  axios
+    <span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">response<span class="token punctuation">:</span> AxiosResponse</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> list <span class="token operator">=</span> <span class="token function">parseList</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> accountRep <span class="token operator">=</span> list<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token function">callback</span><span class="token punctuation">(</span>accountRep<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">error<span class="token punctuation">:</span> AxiosError</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Developer Error: Async Data Error: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>error<span class="token punctuation">.</span>message<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">callbackError</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Oh no! We're unable to fetch the Account Rep</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><span>TypeScript</span></div></div></div>
+<h2 id="promises"><a title="Andhor link to promises" href="https://www.johnpapa.net/async-comparisons/#promises" class="post-header-anchor-link"># </a>Promises</h2>
+<p>Promises do have some indentation to the right, like callbacks. However it tends to not be as extreme. The promise is called to get the Hero and <code>then</code> the orders and the account reps are retrieve at the same time using <code>Promise.all</code>.</p>
+<p>This is different than the allback technique where each call is made one at a time. <code>Promise.all</code> allows you to take the hero data and use it to make two calls: one for orders and one for account reps. When both have returned their responses, the code moves in to the next <code>then</code>.</p>
+<p>The final step is to merge the orders and account repo data into the Hero.</p>
+<p>Notice also, that the nested functions are inside of the <code>getHeroTreeProimise</code> function. This allows the those functions to access the <code>hero</code> variable in the outer function. Otherwise, you'd want to pass the hero around. I prefer this type of closure technique, as it gives those functions context of where they should work (on a hero).</p>
+<div class="code-toolbar"><pre class="line-numbers  language-typescript" data-start="1" style="counter-reset: linenumber 0;"><code class="  language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">getHeroTreePromise</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">searchEmail<span class="token punctuation">:</span> <span class="token builtin">string</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> hero<span class="token punctuation">:</span> Hero<span class="token punctuation">;</span>
+
+  <span class="token comment">// Level 1 - Get the hero record</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token function">getHeroPromise</span><span class="token punctuation">(</span>searchEmail<span class="token punctuation">)</span>
+      <span class="token comment">// Level 2 - Set the hero, and pass it on</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">h<span class="token punctuation">:</span> Hero</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        hero <span class="token operator">=</span> h<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> h<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token comment">// Level 3 - Get the orders and account reps</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">hero<span class="token punctuation">:</span> Hero</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token builtin">Promise</span><span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token function">getOrders</span><span class="token punctuation">(</span>hero<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">getAccountRep</span><span class="token punctuation">(</span>hero<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token comment">// Extract the orders and account reps and put them on their respective Hero objects</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">result<span class="token punctuation">:</span> <span class="token punctuation">[</span>Order<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> AccountRepresentative<span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">mergeData</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">function</span> <span class="token function">getOrders</span><span class="token punctuation">(</span><span class="token parameter">h<span class="token punctuation">:</span> Hero</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token builtin">Promise</span> <span class="token punctuation">{</span>
+    hero <span class="token operator">=</span> h<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> h <span class="token operator">?</span> <span class="token function">getOrdersPromise</span><span class="token punctuation">(</span>h<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token punctuation">:</span> undefined<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">getAccountRep</span><span class="token punctuation">(</span><span class="token parameter">h<span class="token punctuation">:</span> Hero</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token builtin">Promise</span> <span class="token punctuation">{</span>
+    hero <span class="token operator">=</span> h<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> h <span class="token operator">?</span> <span class="token function">getAccountRepPromise</span><span class="token punctuation">(</span>h<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token punctuation">:</span> undefined<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">mergeData</span><span class="token punctuation">(</span><span class="token parameter">result<span class="token punctuation">:</span> <span class="token punctuation">[</span>Order<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> AccountRepresentative<span class="token punctuation">]</span></span><span class="token punctuation">)</span><span class="token punctuation">:</span> Hero <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>orders<span class="token punctuation">,</span> accountRep<span class="token punctuation">]</span> <span class="token operator">=</span> result<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>orders<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      hero<span class="token punctuation">.</span>orders <span class="token operator">=</span> orders<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>accountRep<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      hero<span class="token punctuation">.</span>accountRep <span class="token operator">=</span> accountRep<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> hero<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><span>TypeScript</span></div></div></div>
+<h2 id="asyncawait"><a title="Andhor link to asyncawait" href="https://www.johnpapa.net/async-comparisons/#asyncawait" class="post-header-anchor-link"># </a>Async Await</h2>
+<p>The async await technique gets the same data, but follows a much more "do this then do that" flow. The code flows line by line, just like syncrhonous code flows.</p>
+<p>First you get the hero. Then you get the orders and account rep. Notice that you can use the <code>Promise.all</code> combined with the async await. This is really helpful as it allows you to make boths calls at the same time, but still "await" their response. Then those responses are merged into the <code>hero</code> object.</p>
+<p>This code feels the cleanest to me. Less lines and arguably easier to read.</p>
+<div class="code-toolbar"><pre class="line-numbers  language-typescript" data-start="1" style="counter-reset: linenumber 0;"><code class="  language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">getHeroTreeAsync</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">email<span class="token punctuation">:</span> <span class="token builtin">string</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> hero <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">getHeroAsync</span><span class="token punctuation">(</span>email<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>hero<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>orders<span class="token punctuation">,</span> accountRep<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token builtin">Promise</span><span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token function">getOrdersAsync</span><span class="token punctuation">(</span>hero<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">getAccountRepAsync</span><span class="token punctuation">(</span>hero<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  hero<span class="token punctuation">.</span>orders <span class="token operator">=</span> orders<span class="token punctuation">;</span>
+  hero<span class="token punctuation">.</span>accountRep <span class="token operator">=</span> accountRep<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> hero<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><span>TypeScript</span></div></div></div>
+<h3 id="nestedasyncfunctions"><a title="Andhor link to nestedasyncfunctions" href="https://www.johnpapa.net/async-comparisons/#nestedasyncfunctions" class="post-header-anchor-link"># </a>Nested Async Functions</h3>
+<p>The functions that the async await function <code>getHeroTreeAsync</code> calls are shown below. Here they use axios with the <code>async</code> and <code>await</code> keywords. The data is retrieved adn then returned.</p>
+<div class="code-toolbar"><pre class="line-numbers  language-typescript" data-start="1" style="counter-reset: linenumber 0;"><code class="  language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">getHeroAsync</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">email<span class="token punctuation">:</span> <span class="token builtin">string</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> axios<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>apiUrl<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/heroes?email=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>email<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token function">parseList</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> hero <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> hero<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">handleAxiosErrors</span><span class="token punctuation">(</span>error<span class="token punctuation">,</span> <span class="token string">'Hero'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">getOrdersAsync</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">heroId<span class="token punctuation">:</span> <span class="token builtin">number</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> axios<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>apiUrl<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/orders/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>heroId<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token function">parseList</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> data<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">handleAxiosErrors</span><span class="token punctuation">(</span>error<span class="token punctuation">,</span> <span class="token string">'Orders'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">getAccountRepAsync</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">heroId<span class="token punctuation">:</span> <span class="token builtin">number</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> axios<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>apiUrl<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/accountreps/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>heroId<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token function">parseList</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">handleAxiosErrors</span><span class="token punctuation">(</span>error<span class="token punctuation">,</span> <span class="token string">'Account Rep'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><span>TypeScript</span></div></div></div>
+<h2 id="resources"><a title="Andhor link to resources" href="https://www.johnpapa.net/async-comparisons/#resources" class="post-header-anchor-link"># </a>Resources</h2>
+<p>You can learn more about these techniques fro these resources:</p>
+<ul>
+<li>my Pluralsight course <a href="https://pluralsight.pxf.io/V9eR6?ref=johnpapa.net">Creating Asynchronous TypeScript Code</a></li>
+<li><a href="https://github.com/johnpapa/typescript-async?ref=johnpapa.net">source code for my course on GitHub</a></li>
+<li><a href="https://code.visualstudio.com/Docs/languages/typescript?wt.mc_id=johnpapanet-blog-jopapa&amp;ref=johnpapa.net">VS Code and TypeScript</a></li>
+</ul>
+<!--kg-card-end: markdown-->
+      </div>
+    </section>
+
+    <div class="post-ads">
+  <div id="ad3" data-type="ad" data-publisher="lqm.johnpapa.site" data-zone="post" data-format="728x90"></div>
+  <div id="ad4" data-type="ad" data-publisher="lqm.johnpapa.site" data-zone="post" data-format="728x90"></div>
+  <div id="ad5" data-type="ad" data-publisher="lqm.johnpapa.site" data-zone="post" data-format="300x250"></div>
+  <div id="ad6" data-type="ad" data-publisher="lqm.johnpapa.site" data-zone="post" data-format="300x250"></div>
+</div>
+
+    <div class="post-footer-share">
+  <ul>
+    <li>
+      <a class="twitter" href="http://twitter.com/share?url=https://www.johnpapa.net/async-comparisons/&amp;text=John%Papa%3A%20Comparing%20Callbacks%2C%20Promises%20and%20Async%20Await%20in%20TypeScript" onclick="window.open(this.href, &#39;twitter-share&#39;, &#39;width=550,height=235&#39;);return false;">
+        <span class="text">Tweet</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <title>Twitter icon</title>
+  <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path>
+</svg>      </a>
+    </li>
+    <li>
+      <a class="instagram" href="http://instagram.com/share?url=https://www.johnpapa.net/async-comparisons/&amp;text=John%Papa%3A%20Comparing%20Callbacks%2C%20Promises%20and%20Async%20Await%20in%20TypeScript" onclick="window.open(this.href, &#39;instagram-share&#39;, &#39;width=550,height=235&#39;);return false;">
+        <span class="text">Tweet</span>
+        <svg viewBox="6.746 8.301 20.821 20.821" width="20.821" height="20.821">
+  <g id="Instagram" transform="matrix(0.072619, 0, 0, 0.072619, -1.434176, 0.121547)" style="">
+    <path d="M366.28,233.93h-25a88.22,88.22,0,1,1-170.64,0h-25V355.25a11,11,0,0,0,11,11H355.24a11,11,0,0,0,11-11Zm0-77.19a11,11,0,0,0-11-11H322.17a11,11,0,0,0-11,11v33.09a11,11,0,0,0,11,11h33.07a11,11,0,0,0,11-11ZM256,200.86A55.14,55.14,0,1,0,311.14,256,55.13,55.13,0,0,0,256,200.86m110.28,198.5H145.72a33.09,33.09,0,0,1-33.08-33.09V145.72a33.08,33.08,0,0,1,33.08-33.08H366.28a33.07,33.07,0,0,1,33.08,33.08V366.27a33.08,33.08,0,0,1-33.08,33.09">
+    </path>
+  </g>
+</svg>      </a>
+    </li>
+    <li>
+      <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://www.johnpapa.net/async-comparisons/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+        <span class="text">Post</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title><path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>      </a>
+    </li>
+    <li>
+      <a class="googleplus" href="https://plus.google.com/share?url=https://www.johnpapa.net/async-comparisons/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+        <span class="text">Share</span>
+        <svg width="30" height="20" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
+  <path d="M9.544 8.636v3.274h5.419c-.217 1.406-1.638 4.119-5.414 4.119-3.255 0-5.914-2.7-5.914-6.029 0-3.327 2.652-6.028 5.91-6.028 1.856 0 3.099.792 3.806 1.473l2.591-2.493C14.28 1.396 12.122.46 9.55.46 4.265.456 0 4.73 0 10s4.267 9.544 9.544 9.544c5.512 0 9.165-3.873 9.165-9.326 0-.627-.068-1.107-.15-1.582H9.544zm20.456 0h-2.729V5.907h-2.729v2.73h-2.727v2.726h2.73v2.73h2.736v-2.73H30V8.636z" fill-rule="nonzero"></path>
+</svg>
+      </a>
+    </li>
+    <li>
+      <a class="reddit" href="http://reddit.com/submit?url=https://www.johnpapa.net/async-comparisons/&amp;title=John%Papa%3A%20Comparing%20Callbacks%2C%20Promises%20and%20Async%20Await%20in%20TypeScript" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=550&#39;);return false;">
+        <span class="text">Post</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title><path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>      </a>
+    </li>
+    <li>
+      <a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.johnpapa.net/async-comparisons/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+        <span class="text">Update</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>      </a>
+    </li>
+    <li>
+      <a class="rss" href="http://feeds.feedburner.com/johnpapa">
+        <span class="text">RSS</span>
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>RSS icon</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"></path></svg>      </a>
+    </li>
+  </ul>
+</div>
+
+
+  </article>
+
+</main>
+
+
+
+
+
+
+            
+<nav class="site-main-inner pagination" role="navigation">
+    <a class="pagination-half newer-posts" href="https://www.johnpapa.net/carrying-my-laptop-in-the-outback-solo-messenger-bag/">
+      <svg viewBox="0 0 34 67" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#fff" fill="none" fill-rule="evenodd" stroke-linecap="square">
+          <path d="M.5 33.5L33.01.99M.5 33.5l32.51 32.51"></path>
+        </g>
+      </svg>
+      <div class="text">
+        <div class="name">Next Post</div>
+        <div class="title">Carrying my Laptop in the Outback Solo Messenger Bag</div>
+      </div>
+    </a>
+    <a class="pagination-half older-posts" href="https://www.johnpapa.net/angular-9-lazy-loading-components/">
+      <div class="text">
+        <div class="name">Previous Post</div>
+        <div class="title">Angular 9: Lazy Loading Components</div>
+      </div>
+      <svg viewBox="0 0 34 67" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#fff" fill="none" fill-rule="evenodd" stroke-linecap="square">
+          <path d="M33.5 33.5L.99.99M33.5 33.5L.99 66.01"></path>
+        </g>
+      </svg>
+    </a>
+</nav>
+
+
+        </div>
+
+        <div class="site-sidebar-outer">
+          <div class="site-sidebar-inner">
+  <div class="sidebar-item sidebar-box">
+    <div class="sidebar-box-content">
+      <h3 class="thin">John Papa</h3>
+      <p>Hi, I'm John Papa. I author this blog, create courses for Pluralsight, and work in Developer Relations. I am a professional storyteller, I contribute to OSS, and I'm a Web technologist</p>
+    </div>
+  </div>
+
+  <div class="sidebar-item sidebar-ad">
+    <div id="ad1" class="panel" data-type="ad" data-publisher="lqm.johnpapa.site" data-zone="sidebar" data-format="160x600"></div>
+    <div id="ad1b" class="panel" data-type="ad" data-publisher="lqm.johnpapa.site" data-zone="sidebar" data-format="160x600"></div>
+  </div>
+
+  <div class="sidebar-item sidebar-box sidebar-projects">
+    <div class="sidebar-box-content">
+      <h3 class="thin">Latest Projects</h3>
+
+      <a class="column" target="_blank" href="https://webrush.io/">
+        <img width="250" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/webrush-horizontal.png" alt="">
+      </a>
+
+      <a href="https://pluralsight.pxf.io/c/1355333/432941/7490">
+        <img src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/pluralsight.png" alt="" width="250">
+        <img class="hidden" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/7490">
+      </a>
+
+      <a href="https://pluralsight.pxf.io/QdWQo">
+        <img src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/vue-gs.png" alt="" width="301">
+        <img class="hidden" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/7490(1)">
+      </a>
+
+      <a href="https://pluralsight.pxf.io/dGBMK">
+        <img src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/vue-cli.png" alt="" width="301">
+        <img class="hidden" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/7490(1)">
+      </a>
+
+      <a href="https://pluralsight.pxf.io/V9eR6">
+        <img src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/ts-async.png" alt="" width="301">
+        <img class="hidden" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/7490(1)">
+      </a>
+
+      <a href="https://pluralsight.pxf.io/WN5VX">
+        <img src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/angular-cli.png" alt="" width="301">
+        <img class="hidden" src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/7490(1)">
+      </a>
+    </div>
+  </div>
+
+  <div class="sidebar-item sidebar-box sidebar-tabs">
+    <div class="sidebar-tab-nav">
+      <button type="button" data-tab="0" class="sidebar-tab-nav-item is-active"><span>Must Read</span></button>
+      <button type="button" data-tab="1" class="sidebar-tab-nav-item"><span>Most Recent</span></button>
+    </div>
+    <div class="sidebar-tab-boxes sidebar-box-content">
+      <div class="sidebar-tab-box" data-tab="0">
+        <ul>
+          <li><a href="https://www.johnpapa.net/async-comparisons/">Comparing Callbacks, Promises and Async Await in TypeScript</a></li>
+          <li><a href="https://www.johnpapa.net/debug-angular-9-interacting-with-components/">Debug Angular 9: Interacting with Components</a></li>
+          <li><a href="https://www.johnpapa.net/render-html-2/">Vanilla JavaScript and HTML - No frameworks. No libraries. No problem.</a></li>
+          <li><a href="https://www.johnpapa.net/shifting-your-node-express-apis-to-serverless/">Shifting Your Node Express APIs to Serverless</a></li>
+          <li><a href="https://www.johnpapa.net/predictive-preloading-of-your-angular-bundles/">Predictive Preloading Strategy for Your Angular Bundles</a></li>
+          <li><a href="https://www.johnpapa.net/how-i-write-online-articles/">How I Write Online Articles</a></li>
+          <li><a href="https://www.johnpapa.net/debugnodein60/">Debug Your Node.js App in 60&nbsp;Seconds</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-tab-box" data-tab="1" style="display: none;">
+        <ul>
+          <li><a href="https://www.johnpapa.net/why-you-should-get-cs-degree-on-web-rush-266/">Why You Should Get CS Degree on Web Rush #266</a></li>
+          <li><a href="https://www.johnpapa.net/2023-in-review-on-web-rush-265/">2023 in Review on Web Rush #265</a></li>
+          <li><a href="https://www.johnpapa.net/what-if-you-were-the-boss-on-web-rush-264/">What If You Were The Boss? on Web Rush #264</a></li>
+          <li><a href="https://www.johnpapa.net/stories-every-developer-can-relate-to-on-web-rush-263/">Stories Every Developer Can Relate To on Web Rush #263</a></li>
+          <li><a href="https://www.johnpapa.net/0-to-web-developer-with-jasmine-greenaway-on-web-rush-262/">0 to Web Developer with Jasmine Greenaway on Web Rush #262</a></li>
+          <li><a href="https://www.johnpapa.net/whos-afraid-of-open-source-on-web-rush-261/">Who’s Afraid Of Open Source? on Web Rush #261</a></li>
+          <li><a href="https://www.johnpapa.net/reach-for-the-sky-with-ai-ui-with-mike-ryan-on-web-rush-260/">Reach for the Sky with AI UI - with Mike Ryan on Web Rush #260</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-item sidebar-ad">
+    <div id="ad2" class="panel" data-type="ad" data-publisher="lqm.johnpapa.site" data-zone="sidebar" data-format="300x250"></div>
+  </div>
+</div>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+      <div class="padded">
+        <ul class="site-footer-social">
+          <li>
+            <a class="twitter" href="https://twitter.com/john_papa">
+              <span class="hidden">Twitter</span>
+              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <title>Twitter icon</title>
+  <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path>
+</svg>            </a>
+          </li>
+          <li>
+            <a class="instagram" href="https://instagram.com/_john.papa">
+              <span class="hidden">Instagram</span>
+              <svg viewBox="6.746 8.301 20.821 20.821" width="20.821" height="20.821">
+  <g id="Instagram" transform="matrix(0.072619, 0, 0, 0.072619, -1.434176, 0.121547)" style="">
+    <path d="M366.28,233.93h-25a88.22,88.22,0,1,1-170.64,0h-25V355.25a11,11,0,0,0,11,11H355.24a11,11,0,0,0,11-11Zm0-77.19a11,11,0,0,0-11-11H322.17a11,11,0,0,0-11,11v33.09a11,11,0,0,0,11,11h33.07a11,11,0,0,0,11-11ZM256,200.86A55.14,55.14,0,1,0,311.14,256,55.13,55.13,0,0,0,256,200.86m110.28,198.5H145.72a33.09,33.09,0,0,1-33.08-33.09V145.72a33.08,33.08,0,0,1,33.08-33.08H366.28a33.07,33.07,0,0,1,33.08,33.08V366.27a33.08,33.08,0,0,1-33.08,33.09">
+    </path>
+  </g>
+</svg>            </a>
+          </li>
+          <li>
+            <a class="devdotto" href="https://dev.to/john_papa">
+              <span class="hidden">Dev.to</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img"><title>dev.to icon</title><path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6l.02 2.44.04 2.45.56-.02c.41 0 .63-.07.83-.26.24-.24.26-.36.26-2.2 0-1.91-.02-1.96-.29-2.18zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.32 2.57.05 2.23-.02 2.73-.47 3.3zm5.09-5.47h-2.47v1.77h1.52v1.28l-.72.04-.75.03v1.77l1.22.03 1.2.04v1.28h-1.6c-1.53 0-1.6-.01-1.87-.3l-.3-.28v-3.16c0-3.02.01-3.18.25-3.48.23-.31.25-.31 1.88-.31h1.64v1.3zm4.68 5.45c-.17.43-.64.79-1 .79-.18 0-.45-.15-.67-.39-.32-.32-.45-.63-.82-2.08l-.9-3.39-.45-1.67h.76c.4 0 .75.02.75.05 0 .06 1.16 4.54 1.26 4.83.04.15.32-.7.73-2.3l.66-2.52.74-.04c.4-.02.73 0 .73.04 0 .14-1.67 6.38-1.8 6.68z"></path></svg>            </a>
+          </li>
+          <li>
+            <a class="linkedin" href="http://www.linkedin.com/in/papajohn">
+              <span class="hidden">LinkedIn</span>
+              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>            </a>
+          </li>
+          <li>
+            <a class="rss" href="http://feeds.feedburner.com/johnpapa">
+              <span class="hidden">RSS</span>
+              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>RSS icon</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"></path></svg>            </a>
+          </li>
+        </ul>
+        <div class="site-footer-legal">
+          <h6>Copyright 2024 John Papa</h6>
+          <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. In other words, share generously but provide attribution.</p>
+        </div>
+        <div class="site-footer-disclaimer">
+          <h6>Disclaimer</h6>
+          <p>Opinions expressed here are my own.</p>
+        </div>
+        <div class="site-footer-cite">
+          <h6>Published with <a href="https://ghost.org/">Ghost</a></h6>
+          <p>This site is hosted on <a href="http://ghost.io/">Ghost.io</a><br>Theme by <a href="https://crossstroke.co/">Cross Stroke</a>.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      var images = document.querySelectorAll('.kg-gallery-image img');
+      images.forEach(function (image) {
+        var container = image.closest('.kg-gallery-image');
+        var width = image.attributes.width.value;
+        var height = image.attributes.height.value;
+        var ratio = width / height;
+        container.style.flex = ratio + ' 1 0%';
+      });
+    </script>
+
+    <script>
+      var html_elem = document.querySelector("html");
+      var nav_open = document.querySelector(".site-menu-open");
+      var nav_close = document.querySelector(".site-nav-close");
+
+      nav_open.addEventListener('click', function(e){
+        e.preventDefault();
+        html_elem.setAttribute("data-nav-visible", "yes");
+      });
+
+      nav_close.addEventListener('click', function(e){
+        e.preventDefault();
+        html_elem.setAttribute("data-nav-visible", "no");
+      });
+    </script>
+
+    <script>
+      function _dmBootstrap(t) {
+        var e = document.createElement("script");
+        e.type = "text/javascript", e.async = !0, e.src = ("https:" == document.location.protocol ? "https://" : "http://") + t, (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(e)
+      }
+      function _dmFollowup(t) {
+        "undefined" == typeof DMAds && _dmBootstrap("cdn2.DeveloperMedia.com/a.min.js")
+      }
+      !function() {
+        _dmBootstrap("cdn1.DeveloperMedia.com/a.min.js"), setTimeout(_dmFollowup, 2e3)
+      }();
+    </script>
+
+
+      <script src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/reframe.js.téléchargement"></script>
+  <script>
+    (function() {
+			reframe(document.querySelectorAll('.post-full-content iframe'));
+    })();
+  </script>
+
+  <script src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/prism.js.téléchargement"></script>
+  <script>
+		// Loop over <pre> blocks, and if they have a class like "line-numbers-123", take that and
+		// add the required attributes to show line nunmbers, starting at 123
+		var pre_blocks = document.querySelectorAll('pre');
+		for (var i = pre_blocks.length - 1; i >= 0; i--) {
+			var pre_block = pre_blocks[i];
+			var code_block = pre_block.querySelector('code');
+			var pre_block_classes_string = code_block.className;
+			var pre_block_classes_array = pre_block_classes_string.split(' ');
+			var pre_block_class_matches = pre_block_classes_array.filter(s => s.includes('line-numbers-'))
+			for (var ii = pre_block_class_matches.length - 1; ii >= 0; ii--) {
+				var thenum = pre_block_class_matches[ii].match(/\d+/)[0] // "3"
+				if (thenum) {
+					pre_blocks[i].className = "line-numbers";
+					pre_blocks[i].setAttribute('data-start', thenum);
+				}
+			}
+		}
+
+    Prism.plugins.autoloader.languages_path = '/assets/prism-components/';
+    Prism.plugins.autoloader.use_minified = false;
+  </script>
+
+  <script>
+    (function() {
+      var post_headers = document.querySelectorAll(".nice-type h1, .nice-type h2, .nice-type h3, .nice-type h4, .nice-type h5, .nice-type h6");
+      for (i = 0; i < post_headers.length; ++i) {
+        var elem = post_headers[i];
+        var the_id = elem.id;
+        var a = document.createElement('a');
+        var link_text = document.createTextNode("# ");
+        a.appendChild(link_text);
+        a.title = "Andhor link to " + the_id;
+        a.href = "#" + the_id;
+        a.classList.add("post-header-anchor-link");
+        elem.prepend(a);
+      }
+    })();
+  </script>
+
+  <script src="./Comparing Callbacks, Promises and Async Await in TypeScript_files/headroom.js.téléchargement"></script>
+  <script>
+    (function() {
+
+      var elem = document.querySelector(".site-nav");
+      var headroom = new Headroom(elem, {
+        "offset": 10
+      });
+      headroom.init();
+
+    })();
+  </script>
+
+<script>
+  // Simple polyfill for forEach support on a nodelist in MS Edge
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+  }
+
+  (function () {
+    var sidebar_tab_buttons = document.querySelectorAll('.sidebar-tab-nav-item');
+
+    for (var i = 0; i < sidebar_tab_buttons.length; i++) {
+      sidebar_tab_buttons[i].addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // get the index for the clicked tab
+        var target_tab_index = this.getAttribute('data-tab');
+
+        // Get the content box with that index
+        var target_tab = document.querySelectorAll('.sidebar-tab-box')[target_tab_index];
+
+        // And get all the other content boxes, except the selected one
+        var other_tabs = document.querySelectorAll(".sidebar-tab-box:not([data-tab='" + target_tab_index + "'])");
+
+        // Oh, and the other buttons, except the one that was clicked
+        var other_sidebar_tab_buttons = document.querySelectorAll(".sidebar-tab-nav-item:not([data-tab='" + target_tab_index + "'])");
+
+        // Loop over the now-inactive tabs and content boxes, and hide/deactivate them
+        other_tabs.forEach(function (item, i) {
+          item.style.display = 'none';
+        });
+        other_sidebar_tab_buttons.forEach(function (item, i) {
+          item.classList.remove('is-active');
+        });
+
+        // Finally, show the selected content, and active the correct tab
+        target_tab.style.display = 'block';
+        this.classList.add('is-active');
+      });
+    }
+
+  })();
+</script>
+
+
+
+    
+
+
+
+<div id="ghost-portal-root"></div><div id="sodo-search-root"></div></body></html>
