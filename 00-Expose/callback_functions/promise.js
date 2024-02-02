@@ -1,31 +1,31 @@
 // Promise Maker
-function getWeather() {
+function getPokemon() {
     return new Promise(function (resolve, reject) {
         // Simulation d'une requête HTTP asynchrone avec fetch
-        fetch('https://api.example.com/weather')
+        fetch('https://pokeapi.co/api/v2/pokemon-form/5')
             .then(response => response.json())
-            .then(data => {
+            .then(response => {
                 // Résolution de la promesse avec les données obtenues
-                resolve(data.weather);
+                resolve(response.pokemon.name);
             })
             .catch(error => {
-                // Rejet de la promesse en cas d'erreur
-                reject('Error fetching weather: ' + error);
+                reject('Failed to fetch Pokemon data');
             });
     });
 }
 
 function onSuccess(data) {
-    console.log('success' + data);
+    console.log('success ' + data);
 }
 
 function onError(error) {
-    console.log('error' + error);
+    console.log('error ' + error);
 }
 
 // Promise Receiver
-getWeather()
-    .then(onSuccess, onError);
-//.then(getWeatherIcon)
-//.then(displayWeatherIcon)
-//.catch(onError)
+getPokemon()
+    .then(onSuccess)
+    //.then(getPokemonImage)
+    //.then(displayPokemonImage)
+    .catch(onError)
+
