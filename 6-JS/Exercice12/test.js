@@ -28,16 +28,16 @@ let episodes = [
 // Boucle FOR IN
 for (const hasBeenWatched in episodes) {
   if (Object.hasOwnProperty.call(episodes, hasBeenWatched)) {
-  episodes[hasBeenWatched] = false;
-    
+    episodes[hasBeenWatched] = false;
+
   }
 }
-    
+
 // ======================
 
 const body = document.querySelector('body');
 
-for(let episode of episodes) {
+for (let episode of episodes) {
   let newDiv = document.createElement('div');
   newDiv.classList.add('series-frame');
   let newTitle = document.createElement('h2');
