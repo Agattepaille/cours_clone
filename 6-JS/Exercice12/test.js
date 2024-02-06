@@ -21,17 +21,17 @@ let episodes = [
 } */
 
 // Boucle FOR OF
-/* for (const episode of episodes) {
+ for (const episode of episodes) {
   episode.hasBeenWatched = true;
-} */
+} 
 
 // Boucle FOR IN
-for (const hasBeenWatched in episodes) {
+/*for (const hasBeenWatched in episodes) {
   if (Object.hasOwnProperty.call(episodes, hasBeenWatched)) {
     episodes[hasBeenWatched] = false;
 
   }
-}
+}*/
 
 // ======================
 
