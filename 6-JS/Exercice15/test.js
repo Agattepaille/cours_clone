@@ -1,17 +1,18 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const postcodeInput = document.getElementById("postcode");
     const cityInput = document.getElementById("city");
-    //const streetInput = document.getElementById("street");
+    const streetInput = document.getElementById("street");
+    const houseNumberInput = document.getElementById("houseNumber");
+    const weatherButton = document.getElementById("weatherButton");
 
-    // Add event listeners to postcode and city inputs
-    postcodeInput.addEventListener("change", fetchCity);
-    cityInput.addEventListener("change", fetchStreet);
+    postcodeInput.addEventListener("keyup", () => fetchAddress(postcodeInput.value));
+    cityInput.addEventListener("change", fetchAddress);
+    streetInput.addEventListener("change", fetchAddress);
+    weatherButton.addEventListener("click", fetchWeather);
 
-    function fetchCity() {
-        const postcode = postcodeInput.value;
-
-        // Fetch address data based on postcode
-        fetch("https://api-adresse.data.gouv.fr/search/?q=" + postcode)
+    function fetchAddress(postcode, city) {
+        const url = `https://api-adresse.data.gouv.fr/search/?q=${postcode}${city ? "%20" + city : ""}&limit=5`;
+        fetch(url)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
@@ -19,51 +20,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(response => {
-                // Extract cities from response
-                console.log(response);
-                const cities = response.features.map(feature => feature.properties.label);
-
-                // Update the city dropdown with the fetched cities
-                updateCitiesDropdown(cities);
-            })
-            .catch(error => {
-                console.error("Fetch error:", error);
-                // Handle errors
-            });
-    }
-
-    function fetchStreet() {
-        const postcode = postcodeInput.value;
-        const city = cityInput.value;
-
-        // Fetch address data based on city
-        fetch("https://api-adresse.data.gouv.fr/search/?q=" + postcode + "%10" + city + "&type=street&autocomplete=1")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then(response => {
-                // Extract streets from response
-                console.log(response);
                 const streets = response.features.map(feature => feature.properties.name);
-
-                // Update the street dropdown with the fetched streets
                 updateStreetsDropdown(streets);
             })
-            .catch(error => {
-                console.error("Fetch error:", error);
-                // Handle errors
-            });
+            .catch(error => console.error("Fetch error:", error));
+    }
+
+    function fetchWeather() {
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=c5edf9ca0173ef5c7781a8ad39e3da94&units=metric&lang=fr`;
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(response => {
+                console.log(response);
+                const weatherCard = document.getElementById("weatherCard");
+                const weatherText = document.createElement("p");
+                weatherText.textContent = `Temperature: ${response.main.temp}°C, Weather: ${response.weather[0].description}`;
+                weatherCard.innerHTML = '';
+                weatherCard.appendChild(weatherText);
+            })
+            .catch(error => console.error("Fetch error:", error));
     }
 
     function updateCitiesDropdown(cities) {
         const cityDropdown = document.getElementById("city");
-        // Clear previous options from the city dropdown
         cityDropdown.innerHTML = '<option value="">Select a city</option>';
-
-        // Add new options based on the fetched cities
         cities.forEach(city => {
             const option = document.createElement("option");
             option.value = city;
@@ -74,10 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateStreetsDropdown(streets) {
         const streetDropdown = document.getElementById("street");
-        // Clear previous options from the street dropdown
         streetDropdown.innerHTML = '<option value="">Select a street</option>';
-
-        // Add new options based on the fetched streets
         streets.forEach(street => {
             const option = document.createElement("option");
             option.value = street;
