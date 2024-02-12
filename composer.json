@@ -1,0 +1,5 @@
+{
+    "require": {
+        "symfony/string": "^7.0"
+    }
+}
