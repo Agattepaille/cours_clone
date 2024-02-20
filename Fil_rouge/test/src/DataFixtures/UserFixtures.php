@@ -19,7 +19,7 @@ class UserFixtures extends Fixture
     {
 
         $faker = Factory::create('fr_FR');
-        for ($i=0; $i < 10 ; $i++) {         
+        for ($i=0; $i < 5 ; $i++) {         
             $user = new User();
             $user->setEmail($faker->email);
             $user->setLastname($faker->lastName);
@@ -28,6 +28,7 @@ class UserFixtures extends Fixture
             $user->setCity($faker->city);
             $user->setZipcode($faker->postcode);
             $user->setPhone($faker->phoneNumber);
+            $user->setRoles(['ROLE_CLIENT']);
             $user->setPassword($this->passwordEncoder->hashPassword($user, 'secret'));
             $manager->persist($user);
         }

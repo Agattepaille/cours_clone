@@ -1,4 +1,13 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+{# <label>{{ form.roles.vars.label }}</label>
+    <ul>
+        {% for choice_label, choice_value in form.roles %}
+            <li>
+                <input type="radio" id="{{ form.roles.vars.id }}_{{ loop.index }}" name="{{ form.roles.vars.full_name }}" value="{{ choice_value }}" {% if choice_value == form.roles.vars.value %} checked {% endif %}>
+                <label for="{{ form.roles.vars.id }}_{{ loop.index }}">{{ choice_label }}</label>
+            </li>
+        {% endfor %}
+    </ul> #}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
