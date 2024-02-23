@@ -45,8 +45,8 @@ class UserType extends AbstractType
                     'Apprenti' => 'ROLE_APPRENTI',
                 ],
                 'label' => 'Rôles',
-                'multiple' => true,
-                'expanded' => true,
+                'multiple' => false,
+                'expanded' => false,
                 'attr' => [
                     'class' => 'form-control',
                 ],
