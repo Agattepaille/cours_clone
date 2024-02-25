@@ -1,0 +1,21 @@
+{# templates/emails/signup.html.twig #}
+{% apply inline_css %}
+    <style>
+        {# here, define your CSS styles as usual #}
+        h1 {
+            color: #FF33FF;
+        }
+    </style>
+<h1>Welcome {{ email.toName }}!</h1>
+
+<p>
+    You signed up as {{ username }} the following email:
+</p>
+<p><code>{{ email.to[0].address }}</code></p>
+
+<p>
+    <a href="#">Click here to activate your account</a>
+    (this link is valid until {{ expiration_date|date('F jS') }})
+</p>
+
+{% endapply %}
