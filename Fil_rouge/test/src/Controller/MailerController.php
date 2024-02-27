@@ -16,6 +16,7 @@ class MailerController extends AbstractController
     {
         try {
             $sendMail->send();
+
             // Return a response indicating success
             return new Response('Email sent !', Response::HTTP_OK);
         } catch (TransportExceptionInterface $e) {
