@@ -1,6 +1,5 @@
 <?php
 
-// src/Controller/MailerController.php
 namespace App\Controller;
 
 use App\Service\SendMail;
